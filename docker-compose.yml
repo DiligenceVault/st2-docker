@@ -46,6 +46,10 @@ services:
   st2installpack:
     image: ${ST2_IMAGE_REPO:-stackstorm/}st2actionrunner:${ST2_VERSION:-latest}
     restart: on-failure
+    depends_on:
+      - st2api
+      - st2auth
+      - st2stream
     networks:
       - private
     environment:
@@ -66,7 +70,7 @@ services:
       - stackstorm-packs-configs:/opt/stackstorm/configs:rw
       - stackstorm-packs:/opt/stackstorm/packs:rw
       - ./files/rbac:/opt/stackstorm/rbac:rw
-      - ${ST2_PACKS_DEV:-../dv-stackstorm-integration}:/opt/stackstorm/packs.dev:rw
+      - ${ST2_PACKS_DEV:-./dv-packs}:/opt/stackstorm/packs.dev:rw
       - ./files/st2-cli.conf:/root/.st2/config
       - ./scripts/st2client-startup.sh:/st2client-startup.sh
     dns_search: .
@@ -92,7 +96,7 @@ services:
       - stackstorm-packs-configs:/opt/stackstorm/configs:rw
       - stackstorm-packs:/opt/stackstorm/packs:rw
       - ./files/rbac:/opt/stackstorm/rbac:rw
-      - ${ST2_PACKS_DEV:-../dv-stackstorm-integration}:/opt/stackstorm/packs.dev:rw
+      - ${ST2_PACKS_DEV:-./dv-packs}:/opt/stackstorm/packs.dev:rw
     dns_search: .
   st2stream:
     image: ${ST2_IMAGE_REPO:-stackstorm/}st2stream:${ST2_VERSION:-latest}
@@ -155,7 +159,7 @@ services:
       - ./files/st2.user.conf:/etc/st2/st2.user.conf:ro
       - stackstorm-packs-configs:/opt/stackstorm/configs:rw
       - stackstorm-packs:/opt/stackstorm/packs:rw
-      - ${ST2_PACKS_DEV:-../dv-stackstorm-integration}:/opt/stackstorm/packs.dev:rw
+      - ${ST2_PACKS_DEV:-./dv-packs}:/opt/stackstorm/packs.dev:rw
       - stackstorm-virtualenvs:/opt/stackstorm/virtualenvs:rw
       - stackstorm-ssh:/home/stanley.ssh
       # Action runner needs access to keys since action definitions (Jinja
@@ -210,7 +214,7 @@ services:
       - stackstorm-virtualenvs:/opt/stackstorm/virtualenvs:ro
       - stackstorm-packs:/opt/stackstorm/packs:ro
       - stackstorm-packs-configs:/opt/stackstorm/configs:ro
-      - ${ST2_PACKS_DEV:-../dv-stackstorm-integration}:/opt/stackstorm/packs.dev:ro
+      - ${ST2_PACKS_DEV:-./dv-packs}:/opt/stackstorm/packs.dev:ro
   st2timersengine:
     image: ${ST2_IMAGE_REPO:-stackstorm/}st2timersengine:${ST2_VERSION:-latest}
     restart: on-failure
@@ -248,7 +252,7 @@ services:
       - stackstorm-packs-configs:/opt/stackstorm/configs:rw
       - stackstorm-packs:/opt/stackstorm/packs:rw
       - ./files/rbac:/opt/stackstorm/rbac:rw
-      - ${ST2_PACKS_DEV:-../dv-stackstorm-integration}:/opt/stackstorm/packs.dev:rw
+      - ${ST2_PACKS_DEV:-./dv-packs}:/opt/stackstorm/packs.dev:rw
       - ./files/st2-cli.conf:/root/.st2/config
       - ./scripts/st2client-startup.sh:/st2client-startup.sh
   st2chatops:
