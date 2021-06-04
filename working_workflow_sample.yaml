@@ -1,0 +1,65 @@
+---
+pack: default
+enabled: true
+runner_type: orquesta
+name: another_dv_Workflow_3
+entry_point: workflows/another_dv_Workflow_3.yaml
+parameters:
+  endpoint:
+    type: string
+    required: true
+  payload:
+    type: object
+    required: true
+  method:
+    type: string
+    required: true
+  page_url:
+    type: string
+    required: true
+  content_type:
+    type: string
+    default: application/json
+
+---
+
+version: 1.0
+tasks:
+  # [144, 137]
+  task1:
+    action: diligencevault.apicall
+    next:
+      # #1072c6
+      - do:
+          - task2
+        when: <% succeeded() %>
+        publish:
+          - result: <% result() %>
+    input:
+      log_level: DEBUG
+      endpoint: <% ctx().e %>
+      method: <% ctx().m %>
+      page_url: <% ctx().pu %>
+      payload: <% ctx().p %>
+      content_type: <% ctx().c %>
+      debug: true
+  # [339, 276]
+  task2:
+    action: core.echo
+    input:
+      message: <% ctx().result.result.data %>
+input:
+  - endpoint
+  - payload
+  - method
+  - page_url
+  - content_type
+vars:
+  - e: <% ctx().endpoint %>
+  - p: <% ctx().payload %>
+  - m: <% ctx().method %>
+  - pu: <% ctx().page_url %>
+  - c: <% ctx().content_type %>
+
+output:
+  - result: {}
