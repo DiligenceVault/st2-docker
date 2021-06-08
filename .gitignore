@@ -35,3 +35,13 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+virtualenvs
+rabbitmq
+redis
+mongodb
+packs_configs
+st2.crt
+st2.key
+ssh
+keys
