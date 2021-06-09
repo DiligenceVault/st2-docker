@@ -314,55 +314,55 @@ volumes:
       driver: local
       driver_opts:
         type: none
-        device: ./mongodb
+        device: ${STACKSTORM_MONGO_DB:-./mongodb}
         o: bind
     stackstorm-rabbitmq:
       driver: local
       driver_opts:
         type: none
-        device: ./rabbitmq
+        device: ${STACKSTORM_RABBITMQ:-./rabbitmq}
         o: bind
     stackstorm-redis:
       driver: local
       driver_opts:
         type: none
-        device: ./redis
+        device: ${STACKSTORM_REDIS:-./redis}
         o: bind
     stackstorm-packs:
       driver: local
       driver_opts:
         type: none
-        device: ./packs
+        device: ${STACKSTORM_PACKS:-./packs}
         o: bind
     stackstorm-packs-configs:
       driver: local
       driver_opts:
         type: none
-        device: ./packs_configs
+        device: ${STACKSTORM_PACKS_CONFIGS:-./packs_configs}
         o: bind
     stackstorm-keys:
       driver: local
       driver_opts:
         type: none
-        device: ./keys
+        device: ${STACKSTORM_KEYS:-./keys}
         o: bind
     stackstorm-virtualenvs:
       driver: local
       driver_opts:
         type: none
-        device: ./virtualenvs
+        device: ${STACKSTOMR_VIRTUALENVS:-./virtualenvs}
         o: bind
     stackstorm-ssh:
       driver: local
       driver_opts:
         type: none
-        device: ./ssh
+        device: ${STACKSTORM_SSH:-./ssh}
         o: bind
     stackstorm-dev-packs:
       driver: local
       driver_opts:
         type: none
-        device: ../dv-stackstorm-integration
+        device: ${STACKSTORM_DEV_PACKS:-../dv-stackstorm-integration}
         o: bind
 
 networks:
